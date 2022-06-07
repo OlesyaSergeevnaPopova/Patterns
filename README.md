@@ -1,0 +1,1 @@
+2.3. Patterns Test:  [![Build status](https://ci.appveyor.com/api/projects/status/skoiwwlgg8wnnxy3?svg=true)](https://ci.appveyor.com/project/OlesyaSergeevnaPopova/patterns)
