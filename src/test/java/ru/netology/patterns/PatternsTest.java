@@ -24,44 +24,13 @@ import static com.codeborne.selenide.Selenide.open;
 
 
 public class PatternsTest {
-    private static Faker faker;
-
-    @BeforeEach
-    void setUpAll(){
-        faker = new Faker(new Locale("ru_RU"));
-    }
-
-    public String generateDate(int days){
-        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-    }
-
-//    @Test
-//    void should(){
-//        String name = faker.name().name();
-//        String city = faker.address().city();
-//        String date_event = LocalDate.now().plusDays(1);
-//        String tel = faker.phoneNumber().phoneNumber();
-//        System.out.println(tel);
-//    }
-
-    @Test
-    void shouldGenerateTestDataUsingUtils(){
-        RegistrationInfo info = DataGenerator
-                .Registration
-                .generateInfo("ru");
-        printTestData(info.city, generateDate(2), info.name, info.phone);
-    }
-
-    private void printTestData(String city, String eventDay, String name, String phone) {
-        System.out.println(city + "\n" + eventDay + "\n" + name + "\n" + phone);
-    }
 
     @Test
     void shouldFillForm() {
         Configuration.holdBrowserOpen = true;
         RegistrationInfo form = DataGenerator.Registration.generateInfo("ru");
+        String eventDay = DataGenerator.generateDate(5);
 
-        String eventDay = generateDate(5);
 
         open("http://localhost:9999");
         $("[placeholder=\"Город\"]").setValue(form.city);
@@ -81,8 +50,7 @@ public class PatternsTest {
     void shouldReschedule() {
         Configuration.holdBrowserOpen = true;
         RegistrationInfo form = DataGenerator.Registration.generateInfo("ru");
-
-        String eventDay = generateDate(3);
+        String eventDay = DataGenerator.generateDate(3);
 
 
         open("http://localhost:9999");
@@ -96,7 +64,7 @@ public class PatternsTest {
         $(".notification__content")
                 .shouldHave(Condition.text("Встреча успешно запланирована на " + eventDay), Duration.ofSeconds(15));
 
-        String eventNewDay = generateDate(7);
+        String eventNewDay = DataGenerator.generateDate(7);
 
         open("http://localhost:9999");
         $("[placeholder=\"Город\"]").setValue(form.city);
